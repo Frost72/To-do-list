@@ -325,6 +325,10 @@ function renderTasks(filtered = null) {
     tasksList.querySelectorAll(".delete").forEach(btn => {
         btn.addEventListener("click", (e) => {
             const id = Number(e.currentTarget.dataset.id);
+            const isConfirmed = window.confirm("Удалить эту задачу?");
+
+            if (!isConfirmed) return;
+
             tasks = tasks.filter(t => t.id !== id);
             saveTasks();
             renderCurrentView();
