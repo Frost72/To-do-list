@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do-List</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="header-sidebar">
+            <h3>Планировщик задач</h3>
+        </div>
+       <ul>
+        <li><a href="#">Все</a></li>
+        <li><a href="#">Предстоящие</a></li>
+        <li><a href="#">Выполненные</a></li>
+        <li><a href="#">Календарь</a></li>
+        </ul>
+    </nav>
+   
+    <main class="main">
+        <div class="side-panel">
+            <button class="new-tasks">+</button>
+        </div>
+        <div class="content-panel">
+            <div class="modal-overlay" id="taskModal">
+                <div class="new-contenier">
+                    <button type="button" class="modal-close" aria-label="Закрыть окно">×</button>
+                    <h4>Введите тему задачи</h4>
+                    <input type="text" required="True" />
+                    <h4>Введите что надо выполнить</h4>
+                    <input type="text" size="40"/>
+                    <div class="priority">
+                        <h4>Выберите приоритет задачи</h4>
+                           <div>
+                               <input type="radio" id="prio-low" name="priority" value="низкий">
+                               <label for="prio-low">Низкий</label>
+                           </div>
+                           <div>
+                               <input type="radio" id="prio-medium" name="priority" value="средний" checked>
+                               <label for="prio-medium">Средний</label>
+                           </div>
+                           <div>
+                               <input type="radio" id="prio-high" name="priority" value="высокий">
+                               <label for="prio-high">Высокий</label>
+                           </div>
+                    </div>
+                    <h4>Выберите дату дедлайна</h4>
+                    <input type="date" id="dedline"/>
+                    <button class="add-task"><span>Добавить задачу</span></button>
+                </div>
+            </div>
+            <div class="calendar">
+    <header class="calendar__header">
+        <button id="prevMonth">‹</button>
+        <h2 id="monthYear"></h2>
+        <button id="nextMonth">›</button>
+    </header>
+    <div class="calendar-legend">
+        <span><span class="legend-dot legend-dot--pending"></span>Невыполненные задачи</span>
+        <span><span class="legend-dot legend-dot--done"></span>Выполненные задачи</span>
+    </div>
+    <div class="calendar__grid" id="calendarGrid"></div>
+</div>
+
+            <div class="tasks-list"></div>
+        </div>
+    </main>
+<script src="scripts.js"></script>
+
+</body>

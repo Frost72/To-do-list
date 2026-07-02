@@ -1,0 +1,603 @@
+.day[data-selected] {
+    background: linear-gradient(
+        135deg,
+        #8b5cf6,
+        #ec4899
+    );
+    color: white;
+}
+
+.day[data-selected]:hover {
+    transform: scale(1.05);
+}
+.calendar{
+    display: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    min-height: 100vh;
+
+    background: linear-gradient(
+        135deg,
+        #667eea 0%,
+        #764ba2 35%,
+        #c471ed 70%,
+        #f64f59 100%
+    );
+
+    display: flex;
+}
+
+
+
+.sidebar {
+    width: 240px;
+    min-height: 100vh;
+
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(20px);
+
+    border-right: 1px solid rgba(255,255,255,0.2);
+
+    padding: 25px 15px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.header-sidebar {
+    margin-bottom: 30px;
+}
+
+.header-sidebar h3 {
+    font-size: 20px;
+    font-weight: 100;
+    font-family: "Poppins", sans-serif;
+
+    background: linear-gradient(
+        90deg,
+        #e4dcf7,
+        #fbcce4,
+        #caf4fc,
+        #ddcffd
+    );
+
+    background-size: 300%;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: gradientMove 5s linear infinite;
+}
+
+@keyframes gradientMove {
+    from {
+        background-position: 0%;
+    }
+    to {
+        background-position: 300%;
+    }
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    margin-bottom: 12px;
+}
+
+.sidebar a {
+    display: block;
+
+    text-decoration: none;
+    color: white;
+
+    padding: 12px 15px;
+    border-radius: 10px;
+
+    transition: .35s;
+}
+
+.sidebar a:hover {
+    background: rgba(255,255,255,0.2);
+    text-shadow:
+        0 0 8px #fff,
+        0 0 18px #8b5cf6,
+        0 0 30px #ec4899;
+}
+
+
+
+.main {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    padding: 30px;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 30px;
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.content-panel {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 30px;
+}
+
+.calendar {
+    min-height: 520px;
+}
+
+.calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding: 14px 18px;
+    background: rgba(247, 247, 247, 0.95);
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    color: #1f2937;
+    font-size: 14px;
+}
+
+.calendar-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-dot--pending {
+    background: #ef4444;
+}
+
+.legend-dot--done {
+    background: #22c55e;
+}
+
+.calendar-dot-group {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.calendar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.calendar-dot--pending {
+    background: #ef4444;
+}
+
+.calendar-dot--done {
+    background: #22c55e;
+}
+
+.tasks-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.48);
+    backdrop-filter: blur(10px);
+    z-index: 999;
+    padding: 24px;
+}
+
+.new-contenier {
+    position: relative;
+    width: min(480px, 100%);
+    max-width: 480px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 24px;
+    padding: 28px 26px 24px;
+    box-shadow: 0 32px 80px rgba(15, 23, 42, 0.18);
+    display: grid;
+    gap: 18px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.08);
+    color: #111;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.modal-close:hover {
+    transform: scale(1.05);
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.new-contenier h4 {
+    margin: 0;
+}
+
+.new-contenier input[type="text"],
+.new-contenier input[type="date"] {
+    width: 100%;
+    padding: 12px;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.priority {
+    margin-top: 15px;
+}
+
+
+.new-tasks-old {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    color: white;
+
+    font-size: 16px;
+
+    background: linear-gradient(
+        135deg,
+        var(--accent),
+        var(--accent2)
+    );
+
+    cursor: pointer;
+}
+
+.new-tasks-old:hover {
+    transform: translateY(-2px);
+}
+
+
+.calendar {
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.1);
+}
+
+.calendar__header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar__header button {
+    border: none;
+    background: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.calendar__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar__grid abbr {
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.day {
+    height: 50px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #f3f4f6;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.day[today] {
+    background: linear-gradient(
+        135deg,
+        #8b5cf6,
+        #ec4899
+    );
+    color: white;
+}
+
+.day:hover {
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        position: static;
+    }
+
+    body {
+        display: block;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+}
+.task-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+    padding: 20px;
+    flex: 0 1 320px;
+    min-width: 280px;
+    overflow: hidden;
+    transition: transform 0.26s ease, background 0.3s ease, color 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+}
+
+.task-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    border-radius: 0 14px 14px 0;
+    background: linear-gradient(180deg, rgba(102, 126, 234, 0.95), rgba(236, 72, 153, 0.9));
+}
+
+.task-card--done {
+    background: rgba(15, 23, 42, 0.08);
+    border-color: rgba(15, 23, 42, 0.12);
+    color: #6b7280;
+    opacity: 0.88;
+}
+
+.task-card--done h3 {
+    text-decoration: line-through;
+    color: #4b5563;
+}
+
+.task-card--done .task-body p {
+    color: #6b7280;
+}
+
+.task-card--pulse {
+    animation: task-pulse 0.28s ease;
+}
+
+@keyframes task-pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+    }
+    50% {
+        transform: scale(0.98);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+    }
+}
+
+.conteiner {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
+.tasks-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
+
+.task-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.task-header h3 {
+    flex: 1;
+    font-size: 1.05rem;
+    line-height: 1.25;
+}
+
+.task-body {
+    margin-top: 14px;
+    display: grid;
+    gap: 8px;
+    color: #374151;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.task-footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.task-footer button {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.task-footer button:hover {
+    transform: translateY(-1px);
+}
+
+.task-footer .delete {
+    background: rgba(239, 68, 68, 0.08);
+    color: #b91c1c;
+}
+
+.task-footer .update {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+}
+
+/* Красивая кнопка new-task с эффектом растягивания */
+.new-tasks {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 15px;
+    font-size: 32px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+.new-tasks::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+    border-radius: 15px;
+    pointer-events: none;
+}
+
+.new-tasks:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.37),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Wrapper для эффекта растягивания */
+.button-stretch-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.add-task {
+    display: block;
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    font-family: sans-serif;
+    text-decoration: none;
+    color: #2d1b69;
+    border: 2px solid #6d28d9;
+    letter-spacing: 2px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all .35s;
+    background: transparent;
+}
+
+.add-task span {
+    position: relative;
+    z-index: 3;
+    display: inline-block;
+    color: inherit;
+}
+
+.add-task:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: all .35s;
+    z-index: 1;
+}
+
+.add-task:hover,
+.add-task:hover span {
+    color: #fff;
+    border-color: #764ba2;
+}
+
+.add-task:hover:after {
+    width: 100%;
+}
